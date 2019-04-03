@@ -44,6 +44,7 @@ struct _BriskAppsSection {
 G_DEFINE_TYPE(BriskAppsSection, brisk_apps_section, BRISK_TYPE_SECTION)
 
 DEF_AUTOFREE(GFile, g_object_unref)
+DEF_AUTOFREE(GKeyFile, g_key_file_free)
 
 /**
  * Basic subclassing
@@ -54,12 +55,29 @@ static const GIcon *brisk_apps_section_get_icon(BriskSection *item);
 static const gchar *brisk_apps_section_get_backend_id(BriskSection *item);
 static gboolean brisk_apps_section_can_show_item(BriskSection *section, BriskItem *item);
 
+/**
+ * Create a GIcon for the given path
+ */
+static GIcon *brisk_apps_section_create_path_icon(const gchar *path)
+{
+        autofree(GFile) *file = NULL;
+
+        file = g_file_new_for_path(path);
+        if (!file) {
+                return NULL;
+        }
+        return g_file_icon_new(file);
+}
+
 static void brisk_apps_section_update_directory(BriskAppsSection *self,
                                                 MateMenuTreeDirectory *directory)
 {
         g_clear_object(&self->icon);
         g_clear_pointer(&self->id, g_free);
         g_clear_pointer(&self->name, g_free);
+        const gchar *icon = NULL;
+        const gchar *path = NULL;
+        autofree(GKeyFile) *key_file = NULL;
 
         if (!directory) {
                 return;
@@ -69,7 +87,28 @@ static void brisk_apps_section_update_directory(BriskAppsSection *self,
         self->id =
             g_strdup_printf("%s.mate-directory", matemenu_tree_directory_get_menu_id(directory));
         self->name = g_strdup(matemenu_tree_directory_get_name(directory));
-        self->icon = matemenu_tree_directory_get_icon(directory);
+
+        path = matemenu_tree_directory_get_desktop_file_path(directory);
+        if (!path) {
+                return;
+        }
+
+        key_file = g_key_file_new();
+        if (!g_key_file_load_from_file(key_file, path, 0, NULL)) {
+                return;
+        }
+
+        icon = g_key_file_get_locale_string(key_file, "Desktop Entry", "Icon", NULL, NULL);
+        if (!icon) {
+                return;
+        }
+
+        /* Set an appropriate icon based on the string */
+        if (icon[0] == '/') {
+                self->icon = brisk_apps_section_create_path_icon(icon);
+        } else {
+                self->icon = g_themed_icon_new_with_default_fallbacks(icon);
+        }
 }
 
 static void brisk_apps_section_set_property(GObject *object, guint id, const GValue *value,
