@@ -44,6 +44,7 @@ struct _BriskAppsSection {
 G_DEFINE_TYPE(BriskAppsSection, brisk_apps_section, BRISK_TYPE_SECTION)
 
 DEF_AUTOFREE(GFile, g_object_unref)
+DEF_AUTOFREE(GKeyFile, g_key_file_free)
 
 /**
  * Basic subclassing
@@ -75,17 +76,29 @@ static void brisk_apps_section_update_directory(BriskAppsSection *self,
         g_clear_pointer(&self->id, g_free);
         g_clear_pointer(&self->name, g_free);
         const gchar *icon = NULL;
+        const gchar *path = NULL;
+        autofree(GKeyFile) *key_file = NULL;
 
         if (!directory) {
                 return;
         }
 
-        /* Set our ID and name */
+        /* Set our ID, name, and icon */
         self->id =
             g_strdup_printf("%s.mate-directory", matemenu_tree_directory_get_menu_id(directory));
         self->name = g_strdup(matemenu_tree_directory_get_name(directory));
 
-        icon = matemenu_tree_directory_get_icon(directory);
+        path = matemenu_tree_directory_get_desktop_file_path(directory);
+        if (!path) {
+                return;
+        }
+
+        key_file = g_key_file_new();
+        if (!g_key_file_load_from_file(key_file, path, 0, NULL)) {
+                return;
+        }
+
+        icon = g_key_file_get_locale_string(key_file, "Desktop Entry", "Icon", NULL, NULL);
         if (!icon) {
                 return;
         }
