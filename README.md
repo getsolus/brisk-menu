@@ -9,7 +9,7 @@ The purpose of this project is to provide a usable menu as seen in other desktop
 
 brisk-menu is **distro-agnostic** and the reporting of portability issues is encouraged.
 
-![screenshot](https://raw.githubusercontent.com/solus-project/brisk-menu/master/.github/main.png)
+![screenshot](https://raw.githubusercontent.com/getsolus/brisk-menu/master/.github/main.png)
 
 brisk-menu is a **collaborative** project between [Solus](https://getsol.us/) and [Ubuntu MATE](https://ubuntu-mate.org/)
 
@@ -46,7 +46,7 @@ These planned features will be implemented in the future:
 
 More will be added.
 
-![screenshot_context](https://raw.githubusercontent.com/solus-project/brisk-menu/master/.github/context.png)
+![screenshot_context](https://raw.githubusercontent.com/getsolus/brisk-menu/master/.github/context.png)
 
 Building Brisk Menu
 -------------------
