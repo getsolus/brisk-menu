@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: brisk-menu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-08 11:02+0000\n"
+"POT-Creation-Date: 2019-05-22 17:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,7 @@ msgstr ""
 
 #. Translators: This is the text shown in the "search box" with no content
 #: src/frontend/classic/classic-window.c:395
-#: src/frontend/dash/dash-window.c:358
+#: src/frontend/dash/dash-window.c:365
 msgid "Type to search"
 msgstr ""
 
@@ -71,15 +71,15 @@ msgstr ""
 msgid "End the current session"
 msgstr ""
 
-#: src/frontend/classic/classic-window.c:670
+#: src/frontend/classic/classic-window.c:671
 msgid "Lock the screen"
 msgstr ""
 
-#: src/frontend/classic/classic-window.c:681
+#: src/frontend/classic/classic-window.c:683
 msgid "Turn off the device"
 msgstr ""
 
-#: src/frontend/dash/dash-window.c:63
+#: src/frontend/dash/dash-window.c:64
 msgid "Dash"
 msgstr ""
 
