@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the brisk-menu package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# jemin_jeon, 2018
+# WooHyung Jeon <wh@withjeon.com>, 2018
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: brisk-menu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-08 11:02+0000\n"
+"PO-Revision-Date: 2017-01-21 04:44+0000\n"
+"Last-Translator: WooHyung Jeon <wh@withjeon.com>, 2018\n"
+"Language-Team: Korean (Korea) (https://www.transifex.com/solus-project/teams/68407/ko_KR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/backend/all-items/all-backend.c:52
+msgid "All Items"
+msgstr "전체 항목"
+
+#: src/backend/all-items/all-section.c:102
+#: src/frontend/classic/category-button.c:115
+#: src/frontend/dash/category-button.c:111
+msgid "All"
+msgstr "전체"
+
+#: src/backend/apps/apps-backend.c:116
+msgid "Applications"
+msgstr "응용프로그램"
+
+#: src/backend/favourites/favourites-backend.c:56
+#: src/backend/favourites/favourites-section.c:148
+msgid "Favourites"
+msgstr "즐겨찾기"
+
+#: src/backend/favourites/favourites-backend.c:74
+msgid "Unpin from favourites menu"
+msgstr "즐겨찾기에서 해제"
+
+#: src/backend/favourites/favourites-backend.c:78
+msgid "Pin to favourites menu"
+msgstr "즐겨찾기에 추가"
+
+#: src/backend/favourites/favourites-desktop.c:222
+msgid "Unpin from desktop"
+msgstr "바탕화면에서 해제"
+
+#: src/backend/favourites/favourites-desktop.c:227
+msgid "Pin to desktop"
+msgstr "바탕화면에 추가"
+
+#: src/frontend/classic/classic-window.c:71
+msgid "Classic"
+msgstr "클래식"
+
+#. Translators: This is the text shown in the "search box" with no content
+#: src/frontend/classic/classic-window.c:395
+#: src/frontend/dash/dash-window.c:358
+msgid "Type to search"
+msgstr "검색어를 입력하세요"
+
+#. Translators: This message is shown when the search results are empty
+#: src/frontend/classic/classic-window.c:453
+msgid "Sorry, no items found"
+msgstr "검색 결과가 없습니다"
+
+#: src/frontend/classic/classic-window.c:659
+msgid "End the current session"
+msgstr "현재 세션 종료"
+
+#: src/frontend/classic/classic-window.c:670
+msgid "Lock the screen"
+msgstr "화면 잠그기"
+
+#: src/frontend/classic/classic-window.c:681
+msgid "Turn off the device"
+msgstr "시스템 종료"
+
+#: src/frontend/dash/dash-window.c:63
+msgid "Dash"
+msgstr "대시보드"
+
+#: src/mate-applet/applet.c:248
+msgid "Menu"
+msgstr "메뉴"
+
+#: src/mate-applet/applet.c:337
+msgid "Failed to launch menu editor"
+msgstr "메뉴 편집기 실행에 실패하였습니다"
+
+#: src/mate-applet/applet.c:338
+msgid "Please install 'menulibre' or 'mozo' to edit menus"
+msgstr "메뉴 편집을 위해 'menulibre' 혹은 'mozo'를 설치해주세요"
+
+#: src/mate-applet/main.c:52
+msgid "_Edit Menus"
+msgstr "_메뉴 편집"
+
+#: src/mate-applet/main.c:60
+msgid "_About"
+msgstr "_정보"
+
+#: src/mate-applet/main.c:92 src/mate-applet/main.c:104
+msgid "Brisk Menu Launcher"
+msgstr "Brisk 메뉴 런처"
