@@ -76,6 +76,8 @@ static void brisk_menu_sidebar_scroller_get_preferred_height(GtkWidget *widget, 
 {
         GdkScreen *screen = NULL;
         GdkWindow *window = NULL;
+        GtkStyleContext *style_context = NULL;
+        GtkBorder border;
         GdkRectangle geom = { 0 };
         gint applet_x, applet_y = 0;
         gint mon = 0;
@@ -97,10 +99,13 @@ static void brisk_menu_sidebar_scroller_get_preferred_height(GtkWidget *widget, 
         bin = GTK_BIN(widget);
         child = gtk_bin_get_child(bin);
 
+        style_context = gtk_widget_get_style_context(widget);
+        gtk_style_context_get_border(style_context, GTK_STATE_FLAG_NORMAL, &border);
+
         if (child) {
                 gtk_widget_get_preferred_height(child, min_height, nat_height);
-                *min_height = MIN(max_height, *min_height);
-                *nat_height = MIN(max_height, *nat_height);
+                *min_height = MIN(max_height, *min_height) + border.top + border.bottom;
+                *nat_height = MIN(max_height, *nat_height) + border.top + border.bottom;
         } else {
                 *min_height = *nat_height = 0;
         }
