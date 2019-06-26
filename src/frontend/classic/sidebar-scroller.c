@@ -77,7 +77,11 @@ static void brisk_menu_sidebar_scroller_get_preferred_height(GtkWidget *widget, 
         GdkScreen *screen = NULL;
         GdkWindow *window = NULL;
         GtkStyleContext *style_context = NULL;
+        GtkStateFlags state_flags;
         GtkBorder border;
+        GtkBorder padding;
+        GtkBorder margin;
+        gint spacing;
         GdkRectangle geom = { 0 };
         gint applet_x, applet_y = 0;
         gint mon = 0;
@@ -100,12 +104,17 @@ static void brisk_menu_sidebar_scroller_get_preferred_height(GtkWidget *widget, 
         child = gtk_bin_get_child(bin);
 
         style_context = gtk_widget_get_style_context(widget);
-        gtk_style_context_get_border(style_context, GTK_STATE_FLAG_NORMAL, &border);
+        state_flags = gtk_widget_get_state_flags(widget);
+        gtk_style_context_get_border(style_context, state_flags, &border);
+        gtk_style_context_get_padding(style_context, state_flags, &padding);
+        gtk_style_context_get_margin(style_context, state_flags, &margin);
+
+        spacing = border.top + border.bottom + padding.top + padding.bottom + margin.top + margin.bottom;
 
         if (child) {
                 gtk_widget_get_preferred_height(child, min_height, nat_height);
-                *min_height = MIN(max_height, *min_height) + border.top + border.bottom;
-                *nat_height = MIN(max_height, *nat_height) + border.top + border.bottom;
+                *min_height = MIN(max_height, *min_height) + spacing;
+                *nat_height = MIN(max_height, *nat_height) + spacing;
         } else {
                 *min_height = *nat_height = 0;
         }
