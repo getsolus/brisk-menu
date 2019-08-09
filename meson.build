@@ -1,7 +1,7 @@
 project(
     'brisk-menu',
     ['c'],
-    version: '0.5.0',
+    version: '0.6.0',
     license: [
         'GPL-2.0',
         'CC-BY-SA-4.0',
