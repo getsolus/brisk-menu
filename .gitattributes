@@ -1,0 +1,6 @@
+.gitattributes export-ignore
+.github/ export-ignore
+.gitignore export-ignore
+gen_authors.sh export-ignore
+mkrelease.sh export-ignore
+update_format.sh export-ignore
