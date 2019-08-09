@@ -1,0 +1,3 @@
+[submodule "subprojects/translations"]
+	path = subprojects/translations
+	url = https://github.com/getsolus/brisk-menu-translations.git

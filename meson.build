@@ -75,6 +75,7 @@ path_datadir = join_paths(path_prefix, get_option('datadir'))
 path_libexecdir = join_paths(path_prefix, get_option('libexecdir'))
 path_bindir = join_paths(path_prefix, get_option('bindir'))
 path_localedir = join_paths(path_prefix, get_option('localedir'))
+podir = join_paths(meson.source_root(), 'subprojects', 'translations')
 
 # Sort out config.h now
 cdata = configuration_data()
@@ -104,11 +105,11 @@ with_applet_type = 'stand-alone'
 # Handle data before anything else
 subdir('data')
 
+# Prep translations prior to build
+translations = subproject('translations')
+
 # Now go build the source
 subdir('src')
-
-# And now translations
-subdir('po')
 
 report = [
     '    Build configuration:',
