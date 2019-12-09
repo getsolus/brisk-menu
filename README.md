@@ -53,7 +53,7 @@ Building Brisk Menu
 **Requirements:**
 
  * GTK 3.18 or greater
- * GTK 3.18 build of Mate 1.16 or greater
+ * GTK 3.18 build of MATE 1.22 or greater
  * **Modern** `meson` (`0.40.x`+) and `ninja` (Ubuntu users should use xenial-backports)
 
 **Build Process:**
