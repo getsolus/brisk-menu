@@ -1,7 +1,7 @@
 /*
  * This file is part of brisk-menu.
  *
- * Copyright © 2017-2019 Brisk Menu Developers
+ * Copyright © 2017-2020 Brisk Menu Developers
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

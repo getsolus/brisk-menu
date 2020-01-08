@@ -1,7 +1,7 @@
 /*
  * This file is part of brisk-menu.
  *
- * Copyright © 2016-2019 Brisk Menu Developers
+ * Copyright © 2016-2020 Brisk Menu Developers
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -359,7 +359,7 @@ static void brisk_menu_applet_notify_fail(const gchar *title, const gchar *body)
 void brisk_menu_applet_show_about(__brisk_unused__ GtkAction *action,
                                   __brisk_unused__ BriskMenuApplet *applet)
 {
-        static const gchar *copyright_string = "Copyright © 2016-2019 Brisk Menu Developers";
+        static const gchar *copyright_string = "Copyright © 2016-2020 Brisk Menu Developers";
         gtk_show_about_dialog(NULL,
                               "authors",
                               brisk_developers,
