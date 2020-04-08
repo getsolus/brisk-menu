@@ -102,6 +102,11 @@ void brisk_menu_applet_init_settings(BriskMenuApplet *self)
                          "changed::label-text",
                          G_CALLBACK(brisk_menu_applet_settings_changed),
                          self);
+
+        g_signal_connect(self->settings,
+                         "changed::window-type",
+                         G_CALLBACK(brisk_menu_applet_settings_changed),
+                         self);
 }
 
 /**
@@ -240,14 +245,20 @@ static gboolean button_press_cb(BriskMenuApplet *self, GdkEvent *event, __brisk_
 static void brisk_menu_applet_settings_changed(GSettings *settings, const gchar *key, gpointer v)
 {
         BriskMenuApplet *self = v;
-        autofree(gchar) *value = NULL;
 
-        value = g_settings_get_string(settings, key);
+        if (g_str_equal(key, "label-text")) {
+                autofree(gchar) *value = NULL;
+                value = g_settings_get_string(settings, key);
 
-        if (g_str_equal(value, "")) {
-                gtk_label_set_text(GTK_LABEL(self->label), _("Menu"));
-        } else {
-                gtk_label_set_text(GTK_LABEL(self->label), value);
+                if (g_str_equal(value, "")) {
+                        gtk_label_set_text(GTK_LABEL(self->label), _("Menu"));
+                } else {
+                        gtk_label_set_text(GTK_LABEL(self->label), value);
+                }
+        } else if (g_str_equal(key, "window-type")) {
+                gtk_widget_hide(self->menu);
+                g_clear_pointer(&self->menu, gtk_widget_destroy);
+                brisk_menu_applet_create_window(self);
         }
 }
 
