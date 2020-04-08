@@ -296,9 +296,13 @@ static gboolean brisk_apps_backend_reload(BriskAppsBackend *self)
                 return G_SOURCE_REMOVE;
         }
 
-        /* First things first, reset everything we own */
+        /* First things first, hide the menu to avoid reseting on a live list */
+        brisk_backend_hide_menu(BRISK_BACKEND(self));
+
+        /* Then, reset everything we own */
         brisk_backend_reset(BRISK_BACKEND(self));
 
+        /* Now we can recreate the menu items */
         brisk_apps_backend_init_menus(self);
 
         /* Reset ourselves for the next time */
