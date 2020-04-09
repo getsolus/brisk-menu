@@ -192,7 +192,7 @@ static void brisk_menu_desktop_button_init(BriskMenuDesktopButton *self)
         gtk_box_pack_start(GTK_BOX(layout), label, TRUE, TRUE, 0);
 
         /* Button specific fixes */
-        gtk_widget_set_can_focus(GTK_WIDGET(self), FALSE);
+        gtk_widget_set_can_focus(GTK_WIDGET(self), TRUE);
         gtk_button_set_relief(GTK_BUTTON(self), GTK_RELIEF_NONE);
 
         /* Flatten the button */

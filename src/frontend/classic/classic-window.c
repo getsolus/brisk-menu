@@ -30,7 +30,7 @@ G_DEFINE_TYPE(BriskClassicWindow, brisk_classic_window, BRISK_TYPE_MENU_WINDOW)
 
 static void brisk_classic_window_associate_category(BriskMenuWindow *self, GtkWidget *button);
 static void brisk_classic_window_on_toggled(BriskMenuWindow *self, GtkWidget *button);
-static gboolean brisk_classic_window_on_enter(BriskMenuWindow *self, GdkEventCrossing *event,
+static gboolean brisk_classic_window_on_enter(BriskMenuWindow *self, GdkEvent *event,
                                               GtkWidget *button);
 static void brisk_classic_window_load_css(BriskClassicWindow *self);
 static void brisk_classic_window_key_activate(BriskClassicWindow *self, gpointer v);
@@ -244,6 +244,8 @@ static void brisk_classic_window_invalidate_filter(BriskMenuWindow *self,
 {
         gtk_list_box_invalidate_filter(GTK_LIST_BOX(BRISK_CLASSIC_WINDOW(self)->apps));
         gtk_list_box_invalidate_sort(GTK_LIST_BOX(BRISK_CLASSIC_WINDOW(self)->apps));
+
+        gtk_list_box_unselect_all(GTK_LIST_BOX(BRISK_CLASSIC_WINDOW(self)->apps));
 }
 
 /**
@@ -519,6 +521,10 @@ static void brisk_classic_window_associate_category(BriskMenuWindow *self, GtkWi
                                  "enter-notify-event",
                                  G_CALLBACK(brisk_classic_window_on_enter),
                                  self);
+        g_signal_connect_swapped(button,
+                                 "focus-in-event",
+                                 G_CALLBACK(brisk_classic_window_on_enter),
+                                 self);
 }
 
 /**
@@ -541,11 +547,10 @@ static void brisk_classic_window_on_toggled(BriskMenuWindow *self, GtkWidget *bu
 }
 
 /**
- * Fired by entering into the category button with a roll over
+ * Fired by entering into the category button
  */
 static gboolean brisk_classic_window_on_enter(BriskMenuWindow *self,
-                                              __brisk_unused__ GdkEventCrossing *event,
-                                              GtkWidget *button)
+                                              __brisk_unused__ GdkEvent *event, GtkWidget *button)
 {
         GtkToggleButton *but = GTK_TOGGLE_BUTTON(button);
 
@@ -558,7 +563,8 @@ static gboolean brisk_classic_window_on_enter(BriskMenuWindow *self,
                 return GDK_EVENT_PROPAGATE;
         }
 
-        /* Force activation through rollover */
+        /* Force activation */
+        gtk_widget_grab_focus(button);
         gtk_toggle_button_set_active(but, TRUE);
 
         return GDK_EVENT_PROPAGATE;
@@ -657,7 +663,7 @@ static void brisk_classic_window_setup_session_controls(BriskClassicWindow *self
         self->button_logout = widget;
         g_signal_connect_swapped(widget, "clicked", G_CALLBACK(brisk_menu_window_logout), self);
         gtk_widget_set_tooltip_text(widget, _("End the current session"));
-        gtk_widget_set_can_focus(widget, FALSE);
+        gtk_widget_set_can_focus(widget, TRUE);
         gtk_container_add(GTK_CONTAINER(box), widget);
         style = gtk_widget_get_style_context(widget);
         gtk_style_context_add_class(style, GTK_STYLE_CLASS_FLAT);
@@ -669,7 +675,7 @@ static void brisk_classic_window_setup_session_controls(BriskClassicWindow *self
         self->button_lock = widget;
         g_signal_connect_swapped(widget, "clicked", G_CALLBACK(brisk_menu_window_lock), self);
         gtk_widget_set_tooltip_text(widget, _("Lock the screen"));
-        gtk_widget_set_can_focus(widget, FALSE);
+        gtk_widget_set_can_focus(widget, TRUE);
         gtk_container_add(GTK_CONTAINER(box), widget);
         style = gtk_widget_get_style_context(widget);
         gtk_style_context_add_class(style, GTK_STYLE_CLASS_FLAT);
@@ -681,7 +687,7 @@ static void brisk_classic_window_setup_session_controls(BriskClassicWindow *self
         self->button_shutdown = widget;
         g_signal_connect_swapped(widget, "clicked", G_CALLBACK(brisk_menu_window_shutdown), self);
         gtk_widget_set_tooltip_text(widget, _("Turn off the device"));
-        gtk_widget_set_can_focus(widget, FALSE);
+        gtk_widget_set_can_focus(widget, TRUE);
         gtk_container_add(GTK_CONTAINER(box), widget);
         style = gtk_widget_get_style_context(widget);
         gtk_style_context_add_class(style, GTK_STYLE_CLASS_FLAT);

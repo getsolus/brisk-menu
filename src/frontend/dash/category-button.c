@@ -157,12 +157,9 @@ static void brisk_dash_category_button_init(BriskDashCategoryButton *self)
         g_object_set(self->label, "halign", GTK_ALIGN_START, "valign", GTK_ALIGN_CENTER, NULL);
         gtk_box_pack_start(GTK_BOX(layout), label, TRUE, TRUE, 0);
 
-        /* Button specific fixes */
-        gtk_widget_set_can_focus(GTK_WIDGET(self), FALSE);
-
         /* Look like a button */
         g_object_set(G_OBJECT(self), "draw-indicator", FALSE, NULL);
-        gtk_widget_set_can_focus(GTK_WIDGET(self), FALSE);
+        gtk_widget_set_can_focus(GTK_WIDGET(self), TRUE);
 
         /* Flatten the button */
         style = gtk_widget_get_style_context(GTK_WIDGET(self));
