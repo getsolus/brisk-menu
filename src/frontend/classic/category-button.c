@@ -180,12 +180,9 @@ static void brisk_classic_category_button_init(BriskClassicCategoryButton *self)
                      NULL);
         gtk_box_pack_start(GTK_BOX(layout), label, TRUE, TRUE, 0);
 
-        /* Button specific fixes */
-        gtk_widget_set_can_focus(GTK_WIDGET(self), FALSE);
-
         /* Look like a button */
         g_object_set(G_OBJECT(self), "draw-indicator", FALSE, NULL);
-        gtk_widget_set_can_focus(GTK_WIDGET(self), FALSE);
+        gtk_widget_set_can_focus(GTK_WIDGET(self), TRUE);
 
         /* Flatten the button */
         style = gtk_widget_get_style_context(GTK_WIDGET(self));

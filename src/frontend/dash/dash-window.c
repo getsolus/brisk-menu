@@ -25,7 +25,7 @@ G_DEFINE_TYPE(BriskDashWindow, brisk_dash_window, BRISK_TYPE_MENU_WINDOW)
 
 static void brisk_dash_window_associate_category(BriskMenuWindow *self, GtkWidget *button);
 static void brisk_dash_window_on_toggled(BriskMenuWindow *self, GtkWidget *button);
-static gboolean brisk_dash_window_on_enter(BriskMenuWindow *self, GdkEventCrossing *event,
+static gboolean brisk_dash_window_on_enter(BriskMenuWindow *self, GdkEvent *event,
                                            GtkWidget *button);
 static void brisk_dash_window_load_css(GtkSettings *settings, const gchar *key,
                                        BriskDashWindow *self);
@@ -194,6 +194,8 @@ static void brisk_dash_window_invalidate_filter(BriskMenuWindow *self,
 {
         gtk_flow_box_invalidate_filter(GTK_FLOW_BOX(BRISK_DASH_WINDOW(self)->apps));
         gtk_flow_box_invalidate_sort(GTK_FLOW_BOX(BRISK_DASH_WINDOW(self)->apps));
+
+        gtk_flow_box_unselect_all(GTK_FLOW_BOX(BRISK_DASH_WINDOW(self)->apps));
 }
 
 /**
@@ -379,7 +381,7 @@ static void brisk_dash_window_init(BriskDashWindow *self)
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                        GTK_POLICY_AUTOMATIC,
                                        GTK_POLICY_NEVER);
-        gtk_widget_set_can_focus(scroll, FALSE);
+        gtk_widget_set_can_focus(scroll, TRUE);
         gtk_scrolled_window_set_overlay_scrolling(GTK_SCROLLED_WINDOW(scroll), TRUE);
         self->categories_scroll = scroll;
 
@@ -484,6 +486,10 @@ static void brisk_dash_window_associate_category(BriskMenuWindow *self, GtkWidge
                                  "enter-notify-event",
                                  G_CALLBACK(brisk_dash_window_on_enter),
                                  self);
+        g_signal_connect_swapped(button,
+                                 "focus-in-event",
+                                 G_CALLBACK(brisk_dash_window_on_enter),
+                                 self);
 }
 
 /**
@@ -506,10 +512,9 @@ static void brisk_dash_window_on_toggled(BriskMenuWindow *self, GtkWidget *butto
 }
 
 /**
- * Fired by entering into the category button with a roll over
+ * Fired by entering into the category button
  */
-static gboolean brisk_dash_window_on_enter(BriskMenuWindow *self,
-                                           __brisk_unused__ GdkEventCrossing *event,
+static gboolean brisk_dash_window_on_enter(BriskMenuWindow *self, __brisk_unused__ GdkEvent *event,
                                            GtkWidget *button)
 {
         GtkToggleButton *but = GTK_TOGGLE_BUTTON(button);
@@ -523,7 +528,8 @@ static gboolean brisk_dash_window_on_enter(BriskMenuWindow *self,
                 return GDK_EVENT_PROPAGATE;
         }
 
-        /* Force activation through rollover */
+        /* Force activation */
+        gtk_widget_grab_focus(button);
         gtk_toggle_button_set_active(but, TRUE);
 
         return GDK_EVENT_PROPAGATE;
