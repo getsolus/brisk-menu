@@ -13,7 +13,7 @@ brisk-menu is **distro-agnostic** and the reporting of portability issues is enc
 
 brisk-menu is a **collaborative** project between [Solus](https://getsol.us/) and [Ubuntu MATE](https://ubuntu-mate.org/)
 
-![ubuntu_mate_logo](https://ubuntu-mate.org/gallery/Artwork/design-guide/Main_Logo.png) ![solus_logo](https://build.getsol.us/logo.png)
+![ubuntu_mate_logo](https://ubuntu-mate.org/images/get-involved/logo-guidelines/Main_Logo.png) ![solus_logo](https://build.getsol.us/logo.png)
 
 Features
 --------
