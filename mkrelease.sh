@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-# Script for ikey because he went with meson. *shrug*
-VERSION=v$(grep "version:" meson.build | head -n1 | cut -d"'" -f2)
-NAME="brisk-menu"
-git archive --format tar --prefix ${NAME}-${VERSION}/ --verbose HEAD --output ${NAME}-${VERSION}.tar
-xz -9 -f "${NAME}-${VERSION}.tar"
+rm -rf build
+meson --prefix /usr build
+ninja dist -C build
 
-gpg --armor --detach-sign "${NAME}-${VERSION}.tar.xz"
-gpg --verify "${NAME}-${VERSION}.tar.xz.asc"
+VERSION=$(grep "version:" meson.build | head -n1 | cut -d"'" -f2)
+TAR="brisk-menu-${VERSION}.tar.xz"
+VTAR="brisk-menu-v${VERSION}.tar.xz"
+
+mv build/meson-dist/$TAR $VTAR
+
+gpg --armor --detach-sign $VTAR
+gpg --verify "${VTAR}.asc"

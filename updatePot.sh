@@ -2,7 +2,7 @@
 
 function do_gettext()
 {
-    xgettext --package-name=brisk-menu --package-version=0.6.1 $* --default-domain=brisk-menu --join-existing --from-code=UTF-8 --no-wrap --keyword=_
+    xgettext --package-name=brisk-menu --package-version=0.6.2 $* --default-domain=brisk-menu --join-existing --from-code=UTF-8 --no-wrap --keyword=_
 }
 
 function do_intltool()
