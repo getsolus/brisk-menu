@@ -37,6 +37,8 @@ static void brisk_favourites_backend_pin_item(GSimpleAction *action, GVariant *p
 static void brisk_favourites_backend_unpin_item(GSimpleAction *action, GVariant *parameter,
                                                 BriskFavouritesBackend *self);
 
+BriskFavouritesBackend * BriskFavouritesBackendInstance = NULL;
+
 /**
  * Tell the frontends what we are
  */
@@ -130,6 +132,7 @@ static void brisk_favourites_backend_class_init(BriskFavouritesBackendClass *kla
 static void brisk_favourites_backend_changed(GSettings *settings, const gchar *key,
                                              BriskFavouritesBackend *self)
 {
+        self = BriskFavouritesBackendInstance;
         autofree(gstrv) *favs = g_settings_get_strv(settings, key);
         g_hash_table_remove_all(self->favourites);
 
@@ -167,6 +170,8 @@ static void brisk_favourites_backend_init(BriskFavouritesBackend *self)
                          self);
 
         brisk_favourites_backend_init_desktop(self);
+
+        BriskFavouritesBackendInstance = self;
 
         /* Allow O(1) lookup for the "is pinned" logic */
         self->favourites = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
@@ -206,6 +211,7 @@ static void brisk_favourites_backend_pin_item(__brisk_unused__ GSimpleAction *ac
                                               __brisk_unused__ GVariant *parameter,
                                               BriskFavouritesBackend *self)
 {
+        self = BriskFavouritesBackendInstance;
         autofree(gstrv) *old = NULL;
         autofree(GArray) *array = NULL;
 
@@ -239,6 +245,7 @@ static void brisk_favourites_backend_unpin_item(__brisk_unused__ GSimpleAction *
                                                 __brisk_unused__ GVariant *parameter,
                                                 BriskFavouritesBackend *self)
 {
+        self = BriskFavouritesBackendInstance;
         autofree(gstrv) *old = NULL;
         autofree(GArray) *array = NULL;
 

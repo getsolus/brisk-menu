@@ -80,6 +80,8 @@ DEF_AUTOFREE(MateMenuTree, g_object_unref)
 DEF_AUTOFREE(GDesktopAppInfo, g_object_unref)
 DEF_AUTOFREE(GError, g_error_free)
 
+BriskAppsBackend * BriskAppsBackendInstance = NULL;
+
 /**
  * Due to a glib weirdness we must fully invalidate the monitor's cache
  * to force reload events to work again.
@@ -213,6 +215,7 @@ static void brisk_apps_backend_init(BriskAppsBackend *self)
                                  "changed",
                                  G_CALLBACK(brisk_apps_backend_changed),
                                  self);
+        BriskAppsBackendInstance = self;
 }
 
 /**
@@ -258,6 +261,7 @@ static gint brisk_apps_backend_sort_section(gconstpointer a, gconstpointer b)
  */
 static gboolean brisk_apps_backend_init_menus(BriskAppsBackend *self)
 {
+        self = BriskAppsBackendInstance;
         brisk_apps_backend_reset_pending(self);
 
         /* Now load them again */

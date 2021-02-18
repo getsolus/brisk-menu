@@ -32,6 +32,8 @@ typedef enum {
         PIN_STATUS_UNPINNED = 2,
 } DesktopPinStatus;
 
+extern BriskFavouritesBackend * BriskFavouritesBackendInstance;
+
 /**
  * get_desktop_item_source:
  *
@@ -89,6 +91,7 @@ static void brisk_favourites_backend_action_desktop_pin(__brisk_unused__ GSimple
                                                         __brisk_unused__ GVariant *parameter,
                                                         BriskFavouritesBackend *self)
 {
+        self = BriskFavouritesBackendInstance;
         autofree(GFile) *source = NULL;
         autofree(GFile) *dest = NULL;
         autofree(GError) *error = NULL;
@@ -135,6 +138,7 @@ static void brisk_favourites_backend_action_desktop_unpin(__brisk_unused__ GSimp
                                                           __brisk_unused__ GVariant *parameter,
                                                           BriskFavouritesBackend *self)
 {
+        self = BriskFavouritesBackendInstance;
         autofree(GFile) *source = NULL;
         autofree(GFile) *dest = NULL;
         autofree(GError) *error = NULL;
