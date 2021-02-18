@@ -29,6 +29,8 @@ static GParamSpec *obj_properties[N_PROPS] = {
         NULL,
 };
 
+BriskMenuWindow * BriskMenuWindowInstance = NULL;
+
 /**
  * brisk_menu_window_dispose:
  *
@@ -98,6 +100,7 @@ static void brisk_menu_window_init(BriskMenuWindow *self)
         self->launcher = brisk_menu_launcher_new();
 
         brisk_menu_window_init_settings(self);
+        BriskMenuWindowInstance = self;
 }
 
 static void brisk_menu_window_set_property(GObject *object, guint id, const GValue *value,
