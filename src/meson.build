@@ -13,6 +13,7 @@ libresources = static_library(
 
 link_libresources = declare_dependency(
     link_with: libresources,
+    sources: brisk_resources,
     include_directories: [
         data_include,
     ],
@@ -38,6 +39,7 @@ libsession_stub = static_library(
 # Allow linking to the stub
 link_libsession_stub = declare_dependency(
     link_with: libsession_stub,
+    sources: [libsaver_glue, libsession_glue],
     dependencies: [
         dep_gio_unix,
     ],
