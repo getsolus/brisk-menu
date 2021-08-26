@@ -74,10 +74,10 @@ __brisk_pure__ gint brisk_menu_window_sort(BriskMenuWindow *self, BriskItem *ite
 
 basic_sort:
         /* Ensure we compare lower case only */
-        nameA = g_ascii_strdown(brisk_item_get_display_name(itemA), -1);
-        nameB = g_ascii_strdown(brisk_item_get_display_name(itemB), -1);
+        nameA = g_utf8_strdown(brisk_item_get_display_name(itemA), -1);
+        nameB = g_utf8_strdown(brisk_item_get_display_name(itemB), -1);
 
-        return g_strcmp0(nameA, nameB);
+        return g_strcmp0(g_utf8_collate_key(nameA, -1), g_utf8_collate_key(nameB, -1));
 }
 
 /*
