@@ -56,5 +56,15 @@
       <summary>Button label visibility</summary>
       <description>Control the visibility of the main button label</description>
     </key>
+    <key type="s" name="icon-name">
+      <default>'start-here'</default>
+      <summary>Icon to show in menu button</summary>
+      <description>Set the theme icon name to use in menu button.</description>
+    </key>
+    <key type="b" name="icon-symbolic">
+      <default>true</default>
+      <summary>Menu button uses symbolic icon</summary>
+      <description>Use a symbolic, i.e., low-color, icon variant in menu button.</description>
+    </key>
   </schema>
 </schemalist>

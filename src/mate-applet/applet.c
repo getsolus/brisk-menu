@@ -45,6 +45,7 @@ static void brisk_menu_applet_create_window(BriskMenuApplet *self);
 
 /* Handle applet settings */
 void brisk_menu_applet_init_settings(BriskMenuApplet *self);
+static void brisk_menu_applet_update_icon(BriskMenuApplet *self);
 static void brisk_menu_applet_settings_changed(GSettings *settings, const gchar *key, gpointer v);
 static void brisk_menu_applet_notify_fail(const gchar *title, const gchar *body);
 
@@ -107,6 +108,16 @@ void brisk_menu_applet_init_settings(BriskMenuApplet *self)
                          "changed::window-type",
                          G_CALLBACK(brisk_menu_applet_settings_changed),
                          self);
+
+        g_signal_connect(self->settings,
+                         "changed::icon-name",
+                         G_CALLBACK(brisk_menu_applet_settings_changed),
+                         self);
+
+        g_signal_connect(self->settings,
+                         "changed::icon-symbolic",
+                         G_CALLBACK(brisk_menu_applet_settings_changed),
+                         self);
 }
 
 /**
@@ -158,6 +169,9 @@ static void brisk_menu_applet_init(BriskMenuApplet *self)
 
         /* Pump the label setting */
         brisk_menu_applet_settings_changed(self->settings, "label-text", self);
+
+        /* Update the icon with the requested value. */
+        brisk_menu_applet_settings_changed(self->settings, "icon-name", self);
 
         /* Fix label alignment */
         gtk_widget_set_halign(label, GTK_ALIGN_START);
@@ -239,6 +253,23 @@ static gboolean button_press_cb(BriskMenuApplet *self, GdkEvent *event, __brisk_
         return GDK_EVENT_STOP;
 }
 
+static void brisk_menu_applet_update_icon(BriskMenuApplet *self) {
+        autofree(gchar) *icon_name = NULL,
+                        *icon_name_tmp = NULL;
+
+        icon_name = g_settings_get_string(self->settings, "icon-name");
+        if (g_str_equal(icon_name, "")) {
+                g_free(icon_name);
+                icon_name = g_strdup("start-here");
+        }
+        if (g_settings_get_boolean(self->settings, "icon-symbolic")) {
+                icon_name_tmp = g_strdup(icon_name);
+                g_free(icon_name);
+                icon_name = g_strconcat(icon_name_tmp, "-symbolic", NULL);
+        }
+        gtk_image_set_from_icon_name(GTK_IMAGE(self->image), icon_name, GTK_ICON_SIZE_MENU);
+}
+
 /**
  * Callback for changing applet settings
  */
@@ -259,6 +290,10 @@ static void brisk_menu_applet_settings_changed(GSettings *settings, const gchar 
                 gtk_widget_hide(self->menu);
                 g_clear_pointer(&self->menu, gtk_widget_destroy);
                 brisk_menu_applet_create_window(self);
+        } else if (g_str_equal(key, "icon-name")) {
+                brisk_menu_applet_update_icon(self);
+        } else if (g_str_equal(key, "icon-symbolic")) {
+                brisk_menu_applet_update_icon(self);
         }
 }
 
@@ -368,9 +403,17 @@ static void brisk_menu_applet_notify_fail(const gchar *title, const gchar *body)
 }
 
 void brisk_menu_applet_show_about(__brisk_unused__ GtkAction *action,
-                                  __brisk_unused__ BriskMenuApplet *applet)
+                                  BriskMenuApplet *applet)
 {
         static const gchar *copyright_string = "Copyright © 2016-2020 Brisk Menu Developers";
+        autofree(gchar) *icon_name = NULL;
+
+        icon_name = g_settings_get_string(applet->settings, "icon-name");
+        if (g_str_equal(icon_name, "")) {
+                g_free(icon_name);
+                icon_name = g_strdup("start-here");
+        }
+
         gtk_show_about_dialog(NULL,
                               "authors",
                               brisk_developers,
@@ -379,7 +422,7 @@ void brisk_menu_applet_show_about(__brisk_unused__ GtkAction *action,
                               "license-type",
                               GTK_LICENSE_GPL_2_0,
                               "logo-icon-name",
-                              "start-here",
+                              icon_name,
                               "version",
                               PACKAGE_VERSION,
                               "website",
