@@ -233,8 +233,8 @@ static void brisk_apps_backend_changed(BriskAppsBackend *self, __brisk_unused__ 
 
         /* Push the change back until the very last event, wait 2 seconds and process it */
         if (self->monitor_source_id > 0) {
-                self->monitor_source_id = 0;
                 g_source_remove(self->monitor_source_id);
+                self->monitor_source_id = 0;
         }
 
         self->monitor_source_id = g_timeout_add_full(G_PRIORITY_LOW,
