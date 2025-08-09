@@ -1,6 +1,11 @@
 brisk-menu
 ==========
 
+Solus no longer maintains a MATE edition. There is no continued interest in this project, it is no longer maintained.
+
+The original README is below.
+
+==========
 [![Coverity Scan](https://img.shields.io/coverity/scan/11139.svg)](https://scan.coverity.com/projects/solus-project-brisk-menu) [![License](https://img.shields.io/badge/License-GPL%202.0-blue.svg)](https://opensource.org/licenses/GPL-2.0)
 
 brisk-menu is a modern and efficient menu designed to improve the MATE Desktop Environment with modern, first-class options.
